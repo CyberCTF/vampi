@@ -13,7 +13,7 @@ upstream source in [`app/`](app) builds with its own Dockerfile.
 
 ```bash
 isoloom generate
-isoloom up docker
+isoloom run docker
 ```
 
 Then call http://localhost:5002/createdb to populate the database, and browse the API at
