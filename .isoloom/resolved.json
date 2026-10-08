@@ -1,0 +1,152 @@
+{
+  "generated_by_isoloom": "from isoloom.yml; don't edit: change the spec and run `isoloom generate` (`isoloom check` fails when this file is out of date)",
+  "resolved_version": 1,
+  "name": "vampi",
+  "instance": null,
+  "inputs": [],
+  "networks": {
+    "lab": {
+      "cidr": "10.60.7.0/24",
+      "docker_cidr": "10.60.7.0/24",
+      "internet": false,
+      "gateway": null,
+      "gateway_address": "10.60.7.1",
+      "router": null,
+      "controller": "10.60.7.253"
+    }
+  },
+  "reach": [],
+  "machines": {
+    "vampi": {
+      "access": false,
+      "supplied": false,
+      "shapes": [
+        "docker"
+      ],
+      "arch": "amd64",
+      "os": null,
+      "windows": false,
+      "addresses": {
+        "lab": "10.60.7.10"
+      },
+      "docker_addresses": {
+        "lab": "10.60.7.10"
+      },
+      "services": [
+        {
+          "port": 5000,
+          "name": "api",
+          "http": true,
+          "publish": 5002
+        }
+      ],
+      "depends_on": [],
+      "inputs": [],
+      "volumes": {},
+      "resources": {
+        "cpus": 1,
+        "memory_mb": 256,
+        "disk_gb": 20
+      },
+      "gateway_of": [],
+      "routes": [],
+      "default_gateway": null,
+      "offline": true
+    }
+  },
+  "start_order": [
+    "vampi"
+  ],
+  "clones": {},
+  "tools": {},
+  "groups": {},
+  "router": null,
+  "controller": {
+    "addresses": {
+      "lab": "10.60.7.253"
+    }
+  },
+  "published": [
+    {
+      "machine": "vampi",
+      "port": 5000,
+      "host_port": 5002
+    }
+  ],
+  "targets": {
+    "possible": [
+      "docker",
+      "hosted",
+      "docker-vm",
+      "cloud-docker",
+      "kubernetes"
+    ],
+    "generated": [
+      "docker",
+      "hosted",
+      "docker-vm",
+      "cloud-docker",
+      "kubernetes"
+    ],
+    "refused": {},
+    "not_possible": {
+      "hybrid": "only when some machines are containers and others are VMs",
+      "vagrant": "needs `vm:` on vampi",
+      "proxmox": "needs `vm:` on vampi",
+      "cloud-vm": "needs `vm:` on vampi",
+      "external": "needs `external:` on vampi"
+    }
+  },
+  "checks": {
+    "default_position": "networks",
+    "positions": [
+      {
+        "position": "networks",
+        "machine": null,
+        "runner": "isoloom-check",
+        "checks": [
+          {
+            "name": "VAmPI answers",
+            "derived": false,
+            "kind": "http",
+            "target": "http://vampi:5000/",
+            "expect": "200",
+            "wait": 120
+          },
+          {
+            "name": "the Swagger UI is served",
+            "derived": false,
+            "kind": "http",
+            "target": "http://vampi:5000/ui/",
+            "expect": "200",
+            "wait": 30
+          },
+          {
+            "name": "the debug endpoint leaks the users and their passwords",
+            "derived": false,
+            "kind": "script",
+            "target": "checks/debug-endpoint.sh",
+            "expect": "",
+            "wait": 30
+          }
+        ]
+      },
+      {
+        "position": "vampi",
+        "machine": "vampi",
+        "runner": "isoloom-check-vampi",
+        "checks": [
+          {
+            "name": "no internet from vampi",
+            "derived": true,
+            "kind": "http",
+            "target": "http://1.1.1.1/",
+            "expect": "blocked",
+            "wait": 0
+          }
+        ]
+      }
+    ]
+  },
+  "message": "VAmPI answers at http://localhost:5002/ and documents its API at\n/ui/. Call /createdb first to populate the database. Tokens expire after 60 seconds.\n"
+}

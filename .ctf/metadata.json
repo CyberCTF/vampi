@@ -1,0 +1,9 @@
+{
+  "title": "VAmPI",
+  "description": "A vulnerable REST API built with Flask and an OpenAPI 3 specification, covering the OWASP API Security Top 10: broken object level authorization, mass assignment, excessive data exposure, user enumeration, SQL injection, weak JWT handling and missing rate limits.",
+  "question": "Exploit the VAmPI API vulnerabilities listed in its README.",
+  "category": "WEB",
+  "difficulty": 2,
+  "evidence_kind": "SECRET",
+  "capabilities": ["sql-injection", "broken-object-level-authorization", "mass-assignment", "excessive-data-exposure", "jwt", "user-enumeration"]
+}
