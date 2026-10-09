@@ -94,7 +94,8 @@
       "vagrant": "needs `vm:` on vampi",
       "proxmox": "needs `vm:` on vampi",
       "cloud-vm": "needs `vm:` on vampi",
-      "external": "needs `external:` on vampi"
+      "external": "needs `external:` on vampi",
+      "cloud-services": "left out by `targets:`"
     }
   },
   "checks": {
